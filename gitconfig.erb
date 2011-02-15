@@ -1,0 +1,33 @@
+[user]
+	name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
+	email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+	signingkey = <%= print("Your GPG KeyID: "); STDOUT.flush; STDIN.gets.chomp %>
+[github]
+	user = <%= print("Your Github Username: "); STDOUT.flush; STDIN.gets.chomp %>
+	token = <%= print("Your Github Password: "); STDOUT.flush; STDIN.gets.chomp %>
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	unstage = reset
+	last = log -1 --stat -p --decorate -M
+	tags = tag -n1 -l
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold yellow)<%an>%Creset' --abbrev-commit --date=relative
+	praise = blame
+	unstage = checkout
+	discard = checkout
+	unstage = reset
+[core]
+	editor = mvim -f --nomru -c 'au VimLeave * !open -a iTerm'
+	pager = less -FRSX
+	excludesfile = ~/.gitignore
+	autocrlf = input
+	safecrlf = true
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = auto
+

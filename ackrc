@@ -1,0 +1,35 @@
+# ack config
+# github.com/xoebus/dotfiles
+# 21/08/10 
+
+# == OPTIONS
+--pager=less -R
+--smart-case
+--follow
+
+# == FILETYPES
+# Add a ruby search for related filetypes.
+--type-add=ruby=.haml,.rake,.rsel
+
+# Add markdown support
+--type-set=markdown=.md,.markdown,.mdown
+
+# Add ronn support
+--type-set=ronn=.ronn,.ron
+
+# Add some more zope files to the plone type
+--type-add=plone=.zcml,.props,.dtml,.vpy,.kss
+
+# add .cfg for buildout files
+--type-set=buildout=.cfg
+--type-set=zcml=.zcml
+
+# add markdown, textile, and reStructuredText
+--type-set=plaintext=.md,.mdown,.markdown,.mkdn,.textile,.rst,.txt
+
+# plain text CSV files
+--type-set=csv=.txt,.csv,.tsv
+
+# add in a type for gettext messages
+--type-set=gettext=.pot,.po
+
