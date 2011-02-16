@@ -3,6 +3,9 @@ if has("gui_macvim")
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
 
+  " Hide Top Bar
+  set guioptions-=T
+
   " Command-T for CommandT
   macmenu &File.New\ Tab key = <nop>
   map <D-t> <Plug>PeepOpen<cr>
