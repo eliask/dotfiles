@@ -35,6 +35,7 @@ end
 
 desc "Update vim plugins"
 task :update => [:clean, :check_dirty] do
+  # Update vim plugins.
   GIT_REPOS = Dir["vim/bundle/*/.git/.."].map { |path| path = Pathname.new(path).realpath }
   GIT_REPOS.each do |repo|
     puts "Checking for updates in #{repo}..."
@@ -42,6 +43,10 @@ task :update => [:clean, :check_dirty] do
   end
   date = `date`
   `git commit -am "Updated vim plugins: #{date}"`
+
+  # Update oh my zsh.
+  system "sh oh-my-zsh/tools/upgrade.sh"
+  `git commit -am "Updated oh-my-zsh: #{date}"`
 end
 
 desc "Remove stray tag files"
