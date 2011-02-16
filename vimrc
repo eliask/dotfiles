@@ -32,7 +32,7 @@ set nocompatible
 set ffs=unix,dos,mac
 
 " Set format options, look at ':help fo-table'.
-set formatoptions+=tcq1roqan
+set formatoptions+=1
 
 " Turn on modeline support.
 set modeline
@@ -310,6 +310,7 @@ autocmd BufNewFile,BufReadPost * :Rooter
 autocmd FileType python set ts=4|set sw=4|set expandtab|set sts=4
 autocmd FileType ruby set ts=2|set sw=2|set expandtab|set sts=2
 autocmd FileType java set ts=4|set sw=4|set noexpandtab|set sts=4
+autocmd FileType markdown set formatoptions+=tcq1roqan
 
 " Save all files when Vim loses focus.
 autocmd FocusLost * :wa
