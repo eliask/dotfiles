@@ -41,7 +41,7 @@ task :update => [:clean, :check_dirty] do
     command("git pull", repo)
   end
   date = `date`
-  `git commit -am "Updated vim plugins: #{date}`
+  `git commit -am "Updated vim plugins: #{date}"`
 end
 
 desc "Remove stray tag files"
