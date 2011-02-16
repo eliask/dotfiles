@@ -40,6 +40,8 @@ task :update => [:clean, :check_dirty] do
     puts "Checking for updates in #{repo}..."
     command("git pull", repo)
   end
+  date = `date`
+  `git commit -am "Updated vim plugins: #{date}`
 end
 
 desc "Remove stray tag files"
