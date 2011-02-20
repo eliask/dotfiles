@@ -4,3 +4,4 @@ vim/swap
 
 gitconfig
 cloudapp
+*.compiled.rbc
