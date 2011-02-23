@@ -124,3 +124,6 @@
 [submodule "vim/bundle/rails"]
 	path = vim/bundle/rails
 	url = git://github.com/tpope/vim-rails.git
+[submodule "vim/bundle/asciidoc"]
+	path = vim/bundle/asciidoc
+	url = git://github.com/framallo/asciidoc.vim.git
