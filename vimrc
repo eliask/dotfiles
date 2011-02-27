@@ -4,7 +4,7 @@
 " Last Change: 16-Feb-2011.
 "
 " Large Contributions:
-"   Ryan Tomayko - (romayko/dotfiles)
+"	Ryan Tomayko - (romayko/dotfiles)
 " ----------------------------------------
 
 " == PATHOGEN CALLS =================================================
@@ -40,6 +40,9 @@ set modeline
 " Automatically reload files when they are changed on disk.
 set autoread
 
+" Write all files when running :make
+set autowrite
+
 " Turn off spell checking.
 set nospell
 
@@ -50,14 +53,14 @@ set linebreak
 set wildmode=list:longest,full
 
 " Ignore certain filetypes.
-set wildignore=*.class                 " Ignore compiled Java files
-set wildignore+=.svn,CVS,.git          " Ignore VCS files
-set wildignore+=*.o,*.a,*.so           " Ignore compiled binaries
-set wildignore+=*.jpg,*.png,*.gif      " Ignore images
-set wildignore+=*.pdf                  " Ignore PDF files
-set wildignore+=*.pyc,*.pyo            " Ignore compiled Python files
-set wildignore+=*.hi,*.ho              " Ignore compiled Haskell files
-set wildignore+=*.fam                  " Ignore compiled Falcon files
+set wildignore=*.class				   " Ignore compiled Java files
+set wildignore+=.svn,CVS,.git		   " Ignore VCS files
+set wildignore+=*.o,*.a,*.so		   " Ignore compiled binaries
+set wildignore+=*.jpg,*.png,*.gif	   " Ignore images
+set wildignore+=*.pdf				   " Ignore PDF files
+set wildignore+=*.pyc,*.pyo			   " Ignore compiled Python files
+set wildignore+=*.hi,*.ho			   " Ignore compiled Haskell files
+set wildignore+=*.fam				   " Ignore compiled Falcon files
 
 " Hide the mouse while typing.
 set mousehide
@@ -144,19 +147,19 @@ set ch=2
 
 " Set the status line.
 "
-"    %t - filename
+"	 %t - filename
 "
-"    %{fugitive#statusline()} - branch information
+"	 %{fugitive#statusline()} - branch information
 "
-"    %#warningmsg# - file syntax warnings
-"    %{SyntasticStatuslineFlag()} - file syntax error flags
+"	 %#warningmsg# - file syntax warnings
+"	 %{SyntasticStatuslineFlag()} - file syntax error flags
 "
-"    (%{strlen(&ft)?&ft:'?'} - <filetype>
-"    %{&fenc} - <file encoding>
-"    %{&ff}) - <line endings>
+"	 (%{strlen(&ft)?&ft:'?'} - <filetype>
+"	 %{&fenc} - <file encoding>
+"	 %{&ff}) - <line endings>
 "
-"    %-9.(%l,%c%V%) - <row>, <column>
-"    %<%P\ %* - percentage of way through document
+"	 %-9.(%l,%c%V%) - <row>, <column>
+"	 %<%P\ %* - percentage of way through document
 "
 set statusline=%t%=%{fugitive#statusline()}\ %#warningmsg#\ %{SyntasticStatuslineFlag()}\ (%{strlen(&ft)?&ft:'?'},%{&fenc},%{&ff})\ %-9.(%l,%c%V%)\ \ %<%P\ %*
 
@@ -199,25 +202,29 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-" OLD HABITS. ELIMINATE THEM.
-map <up>        <nop>
-map <down>      <nop>
-map <left>      <nop>
-map <right>     <nop>
-map <Del>       <nop>
-map <Home>      <nop>
-map <End>       <nop>
-map <PageUp>    <nop>
-map <PageDown>  <nop>
+" Create a new line below no matter where we are in the current line.
+imap <D-Return> <ESC>o
+nmap <D-Return> o<ESC>
 
-imap <up>       <nop>
-imap <down>     <nop>
-imap <left>     <nop>
-imap <right>    <nop>
-imap <Del>      <nop>
-imap <Home>     <nop>
-imap <End>      <nop>
-imap <PageUp>   <nop>
+" OLD HABITS. ELIMINATE THEM.
+map <up>		<nop>
+map <down>		<nop>
+map <left>		<nop>
+map <right>		<nop>
+map <Del>		<nop>
+map <Home>		<nop>
+map <End>		<nop>
+map <PageUp>	<nop>
+map <PageDown>	<nop>
+
+imap <up>		<nop>
+imap <down>		<nop>
+imap <left>		<nop>
+imap <right>	<nop>
+imap <Del>		<nop>
+imap <Home>		<nop>
+imap <End>		<nop>
+imap <PageUp>	<nop>
 imap <PageDown> <nop>
 
 " Markdown Underlining
@@ -266,6 +273,16 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 vmap Q gq
 nmap Q gqap
 
+" Toggle between number and relative number.
+nnoremap <leader>l :call ToggleRelativeAbsoluteNumber()<CR>
+function! ToggleRelativeAbsoluteNumber()
+  if &number
+	set relativenumber
+  else
+	set number
+  endif
+endfunction
+
 " Align lines based on a character.
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -275,18 +292,28 @@ if exists(":Tabularize")
 endif
 
 " Align tables while creating them.
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
  
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+	let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+	let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+	Tabularize/|/l1
+	normal! 0
+	call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
   endif
 endfunction
+
+" When editing a file, always jump to the last known cursor position. Don't do
+" it when the position is invalid or when inside an event handler (happens
+" when dropping a file on gvim).
+if has("autocmd")
+  autocmd BufReadPost *
+	\ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \ exe "normal g`\"" |
+    \ endif
+endif
 
 " == FILETYPE ======================================================
 " Plugin loading for specific filetypes.
@@ -309,6 +336,7 @@ autocmd BufNewFile,BufReadPost * :Rooter
 " language specific settings
 autocmd FileType python set ts=4|set sw=4|set expandtab|set sts=4
 autocmd FileType ruby set ts=2|set sw=2|set expandtab|set sts=2
+autocmd FileType vim set ts=2|set sw=2|set expandtab|set sts=2
 autocmd FileType java set ts=4|set sw=4|set noexpandtab|set sts=4
 autocmd FileType markdown set formatoptions+=tcq1roqan
 
@@ -319,10 +347,10 @@ autocmd FocusLost * :wa
 autocmd BufWritePost .vimrc source $MYVIMRC
 
 " == BACKUP ========================================================
-set backupdir=$HOME/.vim/backup//        " store backups under ~/.vim/backup
-set backupcopy=yes                     " keep attributes of original file
+set backupdir=$HOME/.vim/backup//		 " store backups under ~/.vim/backup
+set backupcopy=yes					     " keep attributes of original file
 set backupskip=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
-set directory=~/.vim/swap//      " keep swp files under ~/.vim/swap
+set directory=~/.vim/swap//	         	 " keep swp files under ~/.vim/swap
 
 " == ABBREVIATIONS
 " Vim Stuff
@@ -332,3 +360,4 @@ cabbrev W write
 " == SPELLING
 " Common Stuff
 iab teh the
+iab recieve receive
