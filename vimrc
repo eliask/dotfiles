@@ -113,6 +113,10 @@ set fileencodings=utf-8
 " Grep should show the line and file number.
 set grepprg=grep\ -nH\ $*
 
+" Open a new split on the right or below.
+set splitright
+set splitbelow
+
 " == SEARCHING ======================================================
 " Highlight search matches.
 set hlsearch
@@ -131,7 +135,7 @@ set smartcase
 syntax on
 
 " Vim Theme
-colorscheme sorcerer
+colorscheme lucius
 
 " Turns on line numbering.
 set number
@@ -144,6 +148,9 @@ set lazyredraw
 
 " Set the height of the command bar to 2.
 set ch=2
+
+" Set the font.
+set guifont=Menlo_Regular:h10
 
 " Set the status line.
 "
@@ -339,6 +346,9 @@ autocmd FileType ruby set ts=2|set sw=2|set expandtab|set sts=2
 autocmd FileType vim set ts=2|set sw=2|set expandtab|set sts=2
 autocmd FileType java set ts=4|set sw=4|set noexpandtab|set sts=4
 autocmd FileType markdown set formatoptions+=tcq1roqan
+
+" Mail files should be set up properly.
+autocmd BufRead,BufNewFile sup.* set filetype=mail | set textwidth=72 | set spell | set wrap
 
 " Save all files when Vim loses focus.
 autocmd FocusLost * :wa
