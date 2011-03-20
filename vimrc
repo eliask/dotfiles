@@ -89,8 +89,10 @@ let mapleader = "`"
 set history=2000
 
 " Set up persistent undo.
-set undofile
-set undodir=~/.undo
+if version >= 730
+  set undofile
+  set undodir=~/.undo
+endif
 
 " Start scrolling with 5 lines to go.
 set scrolloff=5
@@ -117,6 +119,9 @@ set grepprg=grep\ -nH\ $*
 set splitright
 set splitbelow
 
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+
 " == SEARCHING ======================================================
 " Highlight search matches.
 set hlsearch
@@ -135,7 +140,17 @@ set smartcase
 syntax on
 
 " Vim Theme
-colorscheme lucius
+set background=dark
+colorscheme desert
+
+" Set global color settings, regardless of colorscheme currently in use.
+function! GlobalColorSettings()
+    " Set 'TODO' & 'FIXME' strings to be bold and standout as hell.
+    highlight Todo term=standout ctermfg=196 ctermbg=226 guifg=#ff4500 guibg=#eeee00
+
+    " Set cursor color to be like in jellybeans.vim colorscheme, but with black text (previously white).
+    highlight Cursor ctermfg=Black ctermbg=153 guifg=#000000 guibg=#b0d0f0
+endfunction
 
 " Turns on line numbering.
 set number
@@ -177,6 +192,9 @@ set guicursor+=o:hor50-Cursor
 set guicursor+=i-ci:ver25-Cursor
 set guicursor+=r-cr:hor20-Cursor
 set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,trail:·,eol:¬
 
 " == INDENT ========================================================
 set tabstop=4
@@ -276,12 +294,15 @@ vnoremap > >gv
 " Open up .vimrc from anywhere.
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+ 
 " Use Q for formatting the current paragraph (or selection).
 vmap Q gq
 nmap Q gqap
 
 " Toggle between number and relative number.
-nnoremap <leader>l :call ToggleRelativeAbsoluteNumber()<CR>
+nnoremap <leader>r :call ToggleRelativeAbsoluteNumber()<CR>
 function! ToggleRelativeAbsoluteNumber()
   if &number
 	set relativenumber
@@ -355,6 +376,10 @@ autocmd FocusLost * :wa
 
 " Reload my vimrc when I save it.
 autocmd BufWritePost .vimrc source $MYVIMRC
+
+
+autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settings on every colorscheme change.
+
 
 " == BACKUP ========================================================
 set backupdir=$HOME/.vim/backup//		 " store backups under ~/.vim/backup

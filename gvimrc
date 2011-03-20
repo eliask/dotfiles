@@ -5,6 +5,9 @@ if has("gui_macvim")
 
   " Hide Top Bar
   set guioptions-=T
+  
+  " Nicer Colourscheme
+  colorscheme lucius
 
   " Command-T for CommandT
   macmenu &File.New\ Tab key = <nop>

@@ -12,7 +12,7 @@ source $ZSH/oh-my-zsh.sh
 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
 export NODE_PATH="/usr/local/lib/node"
 export NXJ_HOME=/Users/cb/lejos_nxj
-export DYLD_LIBRARY_PATH=$NXJ_HOME/bin
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$NXJ_HOME/bin
 export PYTHONPATH="/usr/local/lib/python2.6/site-packages/:$PYTHONPATH"
 export C_INCLUDE_PATH=$C_INCLUDE_PATH:/System/Library/Frameworks/JavaVM.framework/Headers
 
@@ -54,6 +54,12 @@ function gh-get() {
 # Hub is pretty awesome. We should use that.
 function git() {
 	nocorrect noglob hub "$@"
+}
+
+# Poke autossh into responding.
+function wakeup-ssh {
+	rm ~/.ssh/connections/connection-cb@nebula.void.li:9000
+	pkill -s USR1 autossh
 }
 
 # Encrypt and decrypt files from the command line.
