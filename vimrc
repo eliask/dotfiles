@@ -366,7 +366,7 @@ autocmd FileType python set ts=4|set sw=4|set expandtab|set sts=4
 autocmd FileType ruby set ts=2|set sw=2|set expandtab|set sts=2
 autocmd FileType vim set ts=2|set sw=2|set expandtab|set sts=2
 autocmd FileType java set ts=4|set sw=4|set noexpandtab|set sts=4
-autocmd FileType markdown set formatoptions+=tcq1roqan
+"autocmd FileType markdown set formatoptions+=tcq1roqan
 
 " Mail files should be set up properly.
 autocmd BufRead,BufNewFile sup.* set filetype=mail | set textwidth=72 | set spell | set wrap
