@@ -141,7 +141,7 @@ syntax on
 
 " Vim Theme
 set background=dark
-colorscheme xoria256
+colorscheme solarized
 
 hi EasyMotionTarget ctermbg=none ctermfg=196 cterm=bold guifg=#ff4500
 hi EasyMotionShade ctermbg=none ctermfg=240 cterm=none guifg=#222222 
@@ -165,7 +165,7 @@ set lazyredraw
 set ch=2
 
 " Set the font.
-set guifont=lokaltog:h12
+set guifont=Monaco:h12
 
 " Set the status line.
 "
