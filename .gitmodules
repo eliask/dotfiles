@@ -127,3 +127,18 @@
 [submodule "vim/bundle/asciidoc"]
 	path = vim/bundle/asciidoc
 	url = git://github.com/framallo/asciidoc.vim.git
+[submodule "vim/bundle/colour-vividchalk"]
+	path = vim/bundle/colour-vividchalk
+	url = git://github.com/tpope/vim-vividchalk.git
+[submodule "vim/bundle/easymotion"]
+	path = vim/bundle/easymotion
+	url = git://github.com/Lokaltog/vim-easymotion.git
+[submodule "vim/bundle/current-func-info"]
+	path = vim/bundle/current-func-info
+	url = git://github.com/tyru/current-func-info.vim.git
+[submodule "vim/bundle/colour-distinguished"]
+	path = vim/bundle/colour-distinguished
+	url = https://github.com/Lokaltog/vim-distinguished
+[submodule "vim/bundle/colour-solarized"]
+	path = vim/bundle/colour-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git

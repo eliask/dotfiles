@@ -141,15 +141,15 @@ syntax on
 
 " Vim Theme
 set background=dark
-colorscheme desert
+colorscheme xoria256
+
+hi EasyMotionTarget ctermbg=none ctermfg=196 cterm=bold guifg=#ff4500
+hi EasyMotionShade ctermbg=none ctermfg=240 cterm=none guifg=#222222 
 
 " Set global color settings, regardless of colorscheme currently in use.
 function! GlobalColorSettings()
     " Set 'TODO' & 'FIXME' strings to be bold and standout as hell.
-    highlight Todo term=standout ctermfg=196 ctermbg=226 guifg=#ff4500 guibg=#eeee00
-
-    " Set cursor color to be like in jellybeans.vim colorscheme, but with black text (previously white).
-    highlight Cursor ctermfg=Black ctermbg=153 guifg=#000000 guibg=#b0d0f0
+    highlight Todo term=standout ctermfg=196 guifg=#ff4500
 endfunction
 
 " Turns on line numbering.
@@ -165,7 +165,7 @@ set lazyredraw
 set ch=2
 
 " Set the font.
-set guifont=Menlo_Regular:h10
+set guifont=lokaltog:h12
 
 " Set the status line.
 "
@@ -218,8 +218,8 @@ map <C-h> <C-W>h<C-W>_
 map <C-l> <C-W>l<C-W>_
 
 " Make the regex engine be a bit more normal.
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
 " Long lines can mess up movement.
 nnoremap j gj
@@ -257,20 +257,20 @@ map <leader>1 yypVr=
 map <leader>2 yypVr-
 
 " Crush leading whitespace.
-nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>c :%s/\s\+$//<cr>:let @/=''<CR>
 
 " Show a list of syntax errors
-map <leader>e :Errors<cr>
+map <leader>s :Errors<cr>
 
 " Show a list of tags
-map <leader>t :TlistToggle<cr>
+map <leader>a :TlistToggle<cr>
 
 " Move aroud quicklists
 map <C-Up> :cprev<CR>
 map <C-Down> :cnext<CR>
 
 " NERDTree
-map <leader>f :execute ':NERDTreeToggle ' . getcwd()<CR>
+map <leader>n :execute ':NERDTreeToggle ' . getcwd()<CR>
 
 " STOP HIGHLIGHTING DAMMIT
 map <leader><space> :nohlsearch<CR>
@@ -296,7 +296,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
- 
+
 " Use Q for formatting the current paragraph (or selection).
 vmap Q gq
 nmap Q gqap
@@ -305,9 +305,9 @@ nmap Q gqap
 nnoremap <leader>r :call ToggleRelativeAbsoluteNumber()<CR>
 function! ToggleRelativeAbsoluteNumber()
   if &number
-	set relativenumber
+    set relativenumber
   else
-	set number
+    set number
   endif
 endfunction
 
@@ -317,11 +317,13 @@ if exists(":Tabularize")
   vmap <Leader>a= :Tabularize /=<CR>
   nmap <Leader>a: :Tabularize /:\zs<CR>
   vmap <Leader>a: :Tabularize /:\zs<CR>
+  nmap <Leader>a& :Tabularize /&<CR>
+  vmap <Leader>a& :Tabularize /&<CR>
 endif
 
 " Align tables while creating them.
 inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
- 
+
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
@@ -377,9 +379,7 @@ autocmd FocusLost * :wa
 " Reload my vimrc when I save it.
 autocmd BufWritePost .vimrc source $MYVIMRC
 
-
 autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settings on every colorscheme change.
-
 
 " == BACKUP ========================================================
 set backupdir=$HOME/.vim/backup//		 " store backups under ~/.vim/backup

@@ -12,7 +12,7 @@ source $ZSH/oh-my-zsh.sh
 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
 export NODE_PATH="/usr/local/lib/node"
 export NXJ_HOME=/Users/cb/lejos_nxj
-export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$NXJ_HOME/bin
+#export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$NXJ_HOME/bin
 export PYTHONPATH="/usr/local/lib/python2.6/site-packages/:$PYTHONPATH"
 export C_INCLUDE_PATH=$C_INCLUDE_PATH:/System/Library/Frameworks/JavaVM.framework/Headers
 
@@ -124,6 +124,13 @@ preexec_functions+=autojump_preexec
 alias jumpstat="autojump --stat"
 
 function j { local new_path="$(autojump $@)";if [ -n "$new_path" ]; then echo -e "\\033[31m${new_path}\\033[0m"; cd "$new_path";fi }
+
+# -- start rip config -- #
+RIPDIR=/Users/cb/.rip
+RUBYLIB="$RUBYLIB:$RIPDIR/active/lib"
+PATH="$PATH:$RIPDIR/active/bin"
+export RIPDIR RUBYLIB PATH
+# -- end rip config -- #
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"

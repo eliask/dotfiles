@@ -7,7 +7,7 @@ if has("gui_macvim")
   set guioptions-=T
   
   " Nicer Colourscheme
-  colorscheme lucius
+  colorscheme xoria256
 
   " Command-T for CommandT
   macmenu &File.New\ Tab key = <nop>
