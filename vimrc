@@ -17,7 +17,7 @@ let Tlist_GainFocus_On_ToggleOpen=1
 
 " If we can't detect the indentation of the file, use these.
 let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 4
+let g:detectindent_preferred_indent = 2
 
 " Gist Configuration
 let g:gist_clip_command = 'pbcopy'
