@@ -171,6 +171,8 @@ set guifont=Monaco:h12
 "
 "	 %t - filename
 "
+"  %{cfi#get_func_name()} - current function name
+"
 "	 %{fugitive#statusline()} - branch information
 "
 "	 %#warningmsg# - file syntax warnings
@@ -183,7 +185,14 @@ set guifont=Monaco:h12
 "	 %-9.(%l,%c%V%) - <row>, <column>
 "	 %<%P\ %* - percentage of way through document
 "
-set statusline=%t%=%{fugitive#statusline()}\ %#warningmsg#\ %{SyntasticStatuslineFlag()}\ (%{strlen(&ft)?&ft:'?'},%{&fenc},%{&ff})\ %-9.(%l,%c%V%)\ \ %<%P\ %*
+set statusline=\ %t
+set statusline+=%(\[%M%R%H]%)
+set statusline+=\ %{strlen(cfi#get_func_name())?'>\ '.cfi#get_func_name():''}
+set statusline+=\ %=%{fugitive#statusline()}
+set statusline+=%#warningmsg#%{strlen(SyntasticStatuslineFlag())?SyntasticStatuslineFlag():''}%*
+set statusline+=\ (%{strlen(&ft)?&ft:'?'},%{&fenc},%{&ff})
+set statusline+=\ %-9.(%l,%c%V%)
+set statusline+=\ %l/%L\ (%<%P)\ %*
 
 " Pretty GUI Cursor.
 set guicursor=n-v-c:block-Cursor-blinkon0
