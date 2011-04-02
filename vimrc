@@ -167,32 +167,56 @@ set ch=2
 " Set the font.
 set guifont=Monaco:h12
 
-" Set the status line.
-"
-"	 %t - filename
-"
-"  %{cfi#get_func_name()} - current function name
-"
-"	 %{fugitive#statusline()} - branch information
-"
-"	 %#warningmsg# - file syntax warnings
-"	 %{SyntasticStatuslineFlag()} - file syntax error flags
-"
-"	 (%{strlen(&ft)?&ft:'?'} - <filetype>
-"	 %{&fenc} - <file encoding>
-"	 %{&ff}) - <line endings>
-"
-"	 %-9.(%l,%c%V%) - <row>, <column>
-"	 %<%P\ %* - percentage of way through document
-"
-set statusline=\ %t
-set statusline+=%(\[%M%R%H]%)
-set statusline+=\ %{strlen(cfi#get_func_name())?'>\ '.cfi#get_func_name():''}
-set statusline+=\ %=%{fugitive#statusline()}
-set statusline+=%#warningmsg#%{strlen(SyntasticStatuslineFlag())?SyntasticStatuslineFlag():''}%*
-set statusline+=\ (%{strlen(&ft)?&ft:'?'},%{&fenc},%{&ff})
-set statusline+=\ %-9.(%l,%c%V%)
-set statusline+=\ %l/%L\ (%<%P)\ %*
+" Status Line
+hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
+hi Modified guibg=orange guifg=black ctermbg=lightred ctermfg=black
+
+function! MyStatusLine(mode)
+    let statusline=""
+    if a:mode == 'Enter'
+        let statusline.="%#StatColor#"
+    endif
+    let statusline.="\(%n\)\ %f\ "
+    if a:mode == 'Enter'
+        let statusline.="%*"
+    endif
+    let statusline.="%#Modified#%m"
+    if a:mode == 'Leave'
+        let statusline.="%*%r"
+    elseif a:mode == 'Enter'
+        let statusline.="%r%*"
+    endif
+    let statusline .= "\ (%l/%L,\ %c)\ %P%=%h%w%{fugitive#statusline()}%#warningmsg#%{strlen(SyntasticStatuslineFlag())?SyntasticStatuslineFlag():''}%*\ %y\ [%{&encoding}:%{&fileformat}]\ \ "
+    return statusline
+endfunction
+
+au WinEnter * setlocal statusline=%!MyStatusLine('Enter')
+au WinLeave * setlocal statusline=%!MyStatusLine('Leave')
+set statusline=%!MyStatusLine('Enter')
+
+function! InsertStatuslineColor(mode)
+  if a:mode == 'i'
+    hi StatColor guibg=orange ctermbg=lightred
+  elseif a:mode == 'r'
+    hi StatColor guibg=#e454ba ctermbg=magenta
+  elseif a:mode == 'v'
+    hi StatColor guibg=#e454ba ctermbg=magenta
+  else
+    hi StatColor guibg=red ctermbg=red
+  endif
+endfunction 
+
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
+
+"set statusline=\ %t
+"set statusline+=%(\[%M%R%H]%)
+"set statusline+=\ %{strlen(cfi#get_func_name())?'>\ '.cfi#get_func_name():''}
+"set statusline+=\ %=%{fugitive#statusline()}
+"set statusline+=%#warningmsg#%{strlen(SyntasticStatuslineFlag())?SyntasticStatuslineFlag():''}%*
+"set statusline+=\ (%{strlen(&ft)?&ft:'?'},%{&fenc},%{&ff})
+"set statusline+=\ %-9.(%l,%c%V%)
+"set statusline+=\ %l/%L\ (%<%P)\ %*
 
 " Pretty GUI Cursor.
 set guicursor=n-v-c:block-Cursor-blinkon0
