@@ -55,6 +55,9 @@ function gh-get() {
 function git() {
 	nocorrect noglob hub "$@"
 }
+function g() {
+	nocorrect noglob hub "$@"
+}
 
 # Poke autossh into responding.
 function wakeup-ssh {
