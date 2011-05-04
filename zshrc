@@ -65,6 +65,13 @@ function wakeup-ssh {
 	pkill -s USR1 autossh
 }
 
+# Fracking Drives.
+function gtfo-drives {
+  diskutil eject /Volumes/Icarus
+  diskutil eject /Volumes/XOEBUS\ USB
+  diskutil eject /Volumes/Time\ Machine
+}
+
 # Encrypt and decrypt files from the command line.
 #
 #    encrypt <recipient-email> <input> <output>
