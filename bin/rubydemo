@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-print ARGV.join(" ") + " #=> "
-begin
-  p(eval(ARGV.join(" "),binding,"(demo)"))
-rescue Exception => e
-  puts "#<#{e.class}: #{e.message[/.*/]}>"
-end

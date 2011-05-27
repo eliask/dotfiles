@@ -1,0 +1,193 @@
+! .Xresources
+
+!   Application-specific X resource files
+!     <http://www.deepwood.net/software/xrdb/>
+!   The Lucy font family
+!     <http://www.deepwood.net/software/lucy/>
+
+*.background: #242424
+*.foreground: #f6f3e8
+
+! #define COLOR_TERM_BLACK          COLOR_BG
+! #define COLOR_TERM_DARK_RED       #705050
+! #define COLOR_TERM_DARK_GREEN     #60b48a
+! #define COLOR_TERM_DARK_YELLOW    #dfaf8f
+! #define COLOR_TERM_DARK_BLUE      #506070
+! #define COLOR_TERM_DARK_MAGENTA   #dc8cc3
+! #define COLOR_TERM_DARK_CYAN      #8cd0d3
+! #define COLOR_TERM_LIGHT_GRAY     COLOR_FG
+
+! #define COLOR_TERM_DARK_GRAY      #709080
+! #define COLOR_TERM_LIGHT_RED      #dca3a3
+! #define COLOR_TERM_LIGHT_GREEN    #c3bf9f
+! #define COLOR_TERM_LIGHT_YELLOW   #f0dfaf
+! #define COLOR_TERM_LIGHT_BLUE     #94bff3
+! #define COLOR_TERM_LIGHT_MAGENTA  #ec93d3
+! #define COLOR_TERM_LIGHT_CYAN     #93e0e3
+! #define COLOR_TERM_WHITE          #ffffff
+
+
+/*
+ *      default terminal colors
+ *
+ * 0-7 low-intensity
+ * 8-15 high-intensity */
+
+! ! black
+! !*color0:  #2e3436
+! !*color8:  #555753
+! *color0:  COLOR_TERM_BLACK
+! *color8:  COLOR_TERM_DARK_GRAY
+
+! ! red
+! !*color1:  #cc0000
+! !*color9:  #ef2929
+! *color1:  COLOR_TERM_DARK_RED
+! *color9:  COLOR_TERM_LIGHT_RED
+
+! ! green
+! !*color2:  #00ff00
+! !*color10: #66ff66
+! *color2:  COLOR_TERM_DARK_GREEN
+! *color10: COLOR_TERM_LIGHT_GREEN
+
+! ! yellow
+! !*color3:  #c4a000
+! !*color11: #fc394f
+! *color3:  COLOR_TERM_DARK_YELLOW
+! *color11: COLOR_TERM_LIGHT_YELLOW
+
+! blue
+*color4:  #3456a4
+*color12: #729fcf
+! *color4:  COLOR_TERM_DARK_BLUE
+! *color12: COLOR_TERM_LIGHT_BLUE
+
+! ! magenta
+! !*color5:  #75507b
+! !*color13: #ad7fa8
+! *color5:  COLOR_TERM_DARK_MAGENTA
+! *color13: COLOR_TERM_LIGHT_MAGENTA
+
+! ! orange (default cyan)
+! !*color6:  #418179
+! !*color14: #34e2e2
+! *color6:  COLOR_TERM_DARK_CYAN
+! *color14: COLOR_TERM_LIGHT_CYAN
+
+! ! white
+! !*color7:  #d3d7cf
+! !*color15: #eeeeec
+! *color7:  COLOR_TERM_DARK_GRAY
+! *color15: COLOR_TERM_WHITE
+
+
+
+!!! General terminal emulator config
+
+! Required for correct alt-keystrokes like alt-d
+*metaSendsEscape: true
+*eightBitInput: false
+! Fix some input and <Alt> for ncurses
+!XTerm*altSendsEscape:true
+
+! Xft font name style
+XTerm*faceName:Inconsolata
+XTerm*faceSize:7
+Rxvt*font:  xft:monospace:pixelsize=7
+URxvt.font: xft:Terminus:size=7 /* Inconsolata on urxvt is t o o  w i d e, somehow */
+ATerm*font: xft:terminus:size=7
+
+! Enable 256 color
+XTerm*termName:XTerm-color
+XTerm*cursorBlink:false
+!XTerm*utf8:1
+
+! Matches selection for URLs and emails when double-click
+XTerm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:38
+XTerm*trimSelection: true
+
+XTerm*toolBar: false
+!XTerm*rightScrollBar: true
+
+! XTerm*scrollLines: 32767
+*savesLines: 8192
+URxvt.jumpScroll: True                    /* -j: scroll only once for each screenful of info */
+
+
+!URxvt.geometry: 80x20                     /* -geometry */
+URxvt.scrollstyle: plain
+
+URxvt.print-pipe: cat > $(TMPDIR=$HOME mktemp URxvt.XXXXX)
+  /* places a hardcopy in home dir when print is pressed */
+
+URxvt*secondaryScroll: true
+
+URxvt.perl-ext-common: default,selection,matcher,searchable-scrollback
+  /* default: load default perl extensions
+   * selection: intelligent selection (words, urls)
+   * matcher: underlines matched text and executes program upon click
+   * searchable-scro...: adds regex search to scrollback buffer */
+
+URxvt*cutchars:         `"()'*<>[]{|}     /*"So we catch even nasty URLs */
+URxvt*matcher.button: 1                   /* match left-mouse-button */
+URxvt*urlLauncher: x-www-browser
+
+! these are the relevant entries from ~/.Xdefaults to make nice pretty
+! transparent URxvts in a compositing environment:
+!URxvt.foreground: yellow
+!URxvt.depth: 32
+!URxvt*background: rgba:0000/0000/0000/cccc
+!URxvt.fading: 70
+!URxvt.fadeColor: [0]black
+
+! the allowSendEvents setting is the most important line in this file
+! without it, applications in an XTerm will not be able to receive the
+! C-t keystroke.  For the ctags and vi programs, this is fatal.
+! the two numerical Border settings make XTerm "look" nice under
+! ratpoison.  the other settings are my personal preferences.
+Rxvt*allowSendEvents: true
+Rxvt*internalBorder:  0
+Rxvt*borderColor:     black
+Rxvt*borderWidth:     0
+Rxvt*multiScroll:     true
+Rxvt*utmpInhibit:     false
+Rxvt*jumpScroll:      true
+Rxvt*visualBell:      false
+Rxvt*waitForMap:      true
+Rxvt*scrollBar:       false
+Rxvt*title:           URxvt
+ATerm*scrollBar: false
+ATerm*transparent: true
+ATerm*fading: 55
+ATerm*saveLines: 3500
+ATerm*shading: 60
+!ATerm*boldFont: -*-terminus-bold-*-*-*-*-*-*-*-*-*-*-*
+
+! Sets Xcursor theme (installed under /usr/share/icons/ or ~/.icons/)
+Xcursor.theme:Vanilla-DMZ-AA
+
+ATerm*scrollBar_right: true
+ATerm*transpscrollbar: true
+ATerm*scrollTtyOutput: false
+! !ATerm*foreground: white
+!ATerm*background: black
+ATerm*tintingType: true
+!ATerm*tinting: #c0c0c0
+ATerm*tinting: white
+! ATerm*fading: 80
+ATerm*title: ATerm
+!ATerm*font: -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+
+/* xft config */
+Xft*antialias: true
+Xft*hinting: full
+Xft.hintstyle:hintfull ! hintslight | hintsmedium | hintsfull
+Xft.rgba:rgb ! rgba subpixel hinting (for LCDs)
+
+/* xdvi config */
+!xdvi.background: #eeeeee                 /* -bg */
+xdvi.wwwbrowser: x-www-browser           /* -browser: same syntax as $BROWSER */
+xdvi.gsAlpha: true                       /* -gsalpha: uses x11alpha driver for nicer appearance */
+xdvi.unique: true                        /* -unique: make other instance act as `server` */
+xdvi.watchFile: 10                       /* -watchfile: watch dvi file for changes */

@@ -1,0 +1,22 @@
+#!/bin/sh
+# http://zhar.net/projects/shell/realmemory
+
+# Display process memory usage without shared libraries
+# Not exact, but better than top and ps
+
+pid=$1
+# test for number
+echo -n "$pid" | grep -q '[[:digit:]]\+'
+if [ $? -gt 0 ] ; then
+    # process/command name
+    pid=`pidof "$pid" | awk '{ print $1 }'`
+fi
+
+out=`pmap -d $pid | grep '^mapped'`
+if [ $? -ne 0 ] ; then
+    echo "Usage: $0 pid|cmd"
+else
+    echo "mapped = VSZ, writeable/private = RSS - Shared"
+    echo $out
+fi
+

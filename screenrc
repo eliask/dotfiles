@@ -1,10 +1,10 @@
 crlf off
 startup_message off
 defscrollback 15000
-shell zsh
 defmonitor on
 activity "Activity: <%n>"
 silencewait 15
+escape "^Oo"
 
 bell_msg "DING! <%n>"
 vbell_msg "DING! <%n>"
@@ -16,12 +16,15 @@ pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
 autodetach on
 defutf8 on
 
-hardstatus alwayslastline "%{=b}%{G} : %{b}%w %=%{kG}%C%A"
-
-bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
+# Adapted from http://bc.tech.coop/blog/071001.html:
+hardstatus alwayslastline "%{=b}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
 
 # enable bold
 attrcolor b ".I"
+
+# Set the hardstatus prop on gui terms to set the titlebar/icon title
+# TODO: integrate with the (overwriting?) later settings (or discard).
+termcapinfo xterm*|rxvt*|kterm*|Eterm* hs:ts=\E]0;:fs=\007:ds=\E]0;\007
 
 # allow 256 colors
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
@@ -52,4 +55,31 @@ termcapinfo xterm-color 'VR=\E[?5h:VN=\E[?5l'
 termcapinfo xterm-color 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
 termcapinfo xterm-color 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
 
+# emacs keybindings for navigation in copy mode
+markkeys ^B=Y:^F=V:h=^B:l=^F:0=^A:$=^E
 
+# C-space sets mark. markkeys does it in screen 4.0 and higher, but 3.9x
+# needs the bindkey command. (note the ^@ escape sequence for C-space.)
+markkeys ' '=^@
+# bindkey -m ^@ stuff ' '
+
+# page up and page down
+bindkey -m -k kP stuff Y
+bindkey -m -k kN stuff V
+
+# failed attempt to make C-space work in i-search too
+# bindkey -m ^@ eval "stuff \033" "stuff ^@"
+
+# special hack for C-e, since it should go *past*
+# the last char. -m means this is for copy mode only.
+bindkey -m ^e stuff "$^f"
+
+# C-g and other keys just quit copy mode. Esc does nothing.
+markkeys \033=\015=^G=^D=h=j=k=l=H=M=L=G=g=y=c=v=a=x=b=e=B=E=w
+markkeys @=\033
+
+# control arrows move by words. (set B, e, and w to F keys so that i can
+# use them to move by words, but they themselves still quit copy mode.)
+markkeys B=[:E=]:b={:e=}:w=>
+bindkey -m ^[Od stuff {  #"[[}"
+bindkey -m ^[Oc stuff ]  #"}]^f"

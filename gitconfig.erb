@@ -5,21 +5,43 @@
 [github]
 	user = <%= print("Your Github Username: "); STDOUT.flush; STDIN.gets.chomp %>
 	token = <%= print("Your Github Password: "); STDOUT.flush; STDIN.gets.chomp %>
+
 [alias]
-	st = status
+	br = branch
+	ca = commit -a
+	cc = "! git commit -m '#-checkpoint-' --edit"
 	ci = commit
 	co = checkout
-	br = branch
-	unstage = reset
-	last = log -1 --stat -p --decorate -M
-	tags = tag -n1 -l
-	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold yellow)<%an>%Creset' --abbrev-commit --date=relative
-	praise = blame
-	unstage = checkout
+	com = checkout master
+	d = diff --color-words
+	df = diff
 	discard = checkout
-	unstage = reset
+
+	f = "! git status --porcelain| awk '{ print $2 }' | head -n 1" # get the 1st changed file
+
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold yellow)<%an>%Creset' --abbrev-commit --date=relative
+
+	l = "! git --no-pager log --oneline --graph -n 18 --decorate"
+	last = log -1 --stat -p --decorate -M
+	# lo = "! git --no-pager log --graph -n 20 --pretty=format:'%Cgreen%h%Creset %s %Cblue%an%Creset';echo"
+	# lg = log -p  --decorate
+	lg = log --name-status
+	ll = "log --oneline --graph --decorate --branches"
+
+	praise = blame
+	st = status
+	sync = "! git pull && git push"
+	tags = tag -n1 -l
+
+[apply]
+	whitespace = strip
+[diff]
+	rename = copy
+[pager]
+	color = true
+[merge]
+	summary = true
 [core]
-	editor = mvim -f --nomru -c 'au VimLeave * !open -a iTerm'
 	pager = less -FRSX
 	excludesfile = ~/.gitignore
 	autocrlf = input
